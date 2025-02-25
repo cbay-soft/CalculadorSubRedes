@@ -1,0 +1,55 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
+android {
+    namespace = "com.example.red_calculator"
+    compileSdk = flutter.compileSdkVersion
+    ndkVersion = flutter.ndkVersion
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11 // Or VERSION_17
+        targetCompatibility JavaVersion.VERSION_11 // Or VERSION_17
+    }
+
+    kotlinOptions {
+        jvmTarget = '11' // Or '17' if you chose that above
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId = "com.example.red_calculator"
+        // You can update the following values to match your application needs.
+        // For more information, see: https://flutter.dev/to/review-gradle-config.
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.debug // Temporal, debes configurar la firma para release
+            minifyEnabled true // Habilita la reducción de código
+            shrinkResources true // Habilita la reducción de recursos
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            applicationIdSuffix ".debug" // Sufijo para el ID de la app de debug
+            versionNameSuffix "-debug" // Sufijo para la versión de debug
+        }
+        staging { // Nuevo build type
+            initWith debug // Hereda la configuración de debug
+            applicationIdSuffix ".staging" // Sufijo para el ID de la app de staging
+            versionNameSuffix "-staging" // Sufijo para la versión de staging
+            // Configuraciones específicas para staging (ej: diferentes endpoints de API)
+        }
+    }
+}
+
+flutter {
+    source = "../.."
+}
